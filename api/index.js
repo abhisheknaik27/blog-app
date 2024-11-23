@@ -3,14 +3,17 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+
 import UserModel from './models/User.js';
 dotenv.config();
 const app = express();
 
 const salt = bcrypt.genSaltSync(10);
+const SECRET_KEY = "dsknndsncdbiuwebcjkbjkbdcsdckl";
 
 
-app.use(cors());
+app.use(cors({credentials: true, origin:'http://localhost:5173'}));
 app.use(express.json());
 
 const PORT = 4000;
@@ -32,5 +35,19 @@ app.post('/register', async (req, res) => {
     }
     
 });
+
+app.post('/login', async(req, res) => {
+    const { username, password } = req.body;
+    const user = await UserModel.findOne({ username });
+    const passResult = bcrypt.compareSync(password, user.password);
+    
+    if(passResult){
+        //logedin
+        const token = jwt.sign({username, id:user._id}, SECRET_KEY);
+        res.cookie('token', token).json('ok');
+    } else{
+        res.status(400).json( 'Wrong Credentials' );
+    }
+})
 
 app.listen(PORT, () => console.log(`Server running on ${PORT}`))

@@ -3,7 +3,6 @@ import React, { useState } from "react";
 const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  console.log(username, password);
 
   const register = async (e) => {
     e.preventDefault();
