@@ -5,23 +5,20 @@ const Post = ({ _id, title, summary, cover, content, createdAt, author }) => {
   return (
     <>
       {/* Posts */}
-      <div
-        className="grid grid-cols-2 gap-3 mb-8 max-h-[400px] overflow-hidden 
-      "
-      >
-        <div className="flex items-start justify-center max-h-[400px] overflow-hidden ">
+      <div className="grid grid-cols-1 md:grid-cols-[1.5fr,1fr] gap-4 mt-8 mb-8 max-h-[600px] overflow-hidden">
+        <div className="flex items-center justify-center max-h-[400px] overflow-hidden w-full">
           <Link to={`/post/${_id}`}>
             <img
               src={"http://localhost:4000/" + cover}
               alt=""
-              className="pt-2 w-full h-[300px] md:h-[400px] object-cover"
+              className="pt-2 w-full h-full object-cover"
             />
           </Link>
         </div>
 
         <div className="p-0">
           <Link to={`/post/${_id}`}>
-            <h1 className="text-2xl font-bold">{title}</h1>
+            <h1 className="text-3xl font-bold">{title}</h1>
           </Link>
           <p className="py-2 text-gray-400 flex items-baseline gap-2">
             <a href="" className="text-gray-700 text-sm font-semibold ">

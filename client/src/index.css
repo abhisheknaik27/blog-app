@@ -5,3 +5,10 @@
 body{
     padding: 10px 30px;
 }
+
+a{
+    cursor: pointer;
+}
+button{
+    cursor: pointer;
+}

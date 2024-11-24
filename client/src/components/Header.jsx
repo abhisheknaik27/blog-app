@@ -26,11 +26,14 @@ const Header = () => {
       <main className="m-w-[500px] m-0 pt-5 px-2">
         <header className="flex justify-between items-center mb-10 ">
           <Link to="/" className="text-gray-600 text-xl font-bold">
-            My Blog
+            ABHI'S BLOG
           </Link>
           <nav className="flex gap-5">
             {userInfo?.username ? (
               <>
+                <span className="font-semibold text-gray-500">
+                  Hello {userInfo.username}
+                </span>
                 <Link to="/create">Create New </Link>
                 <a onClick={logout}>Logout</a>
               </>

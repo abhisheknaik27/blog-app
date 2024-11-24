@@ -46,9 +46,9 @@ const PostPage = () => {
         </div>
       )}
 
-      <div className="flex w-full max-h-[300px] overflow-hidden mb-6">
+      <div className="flex w-full max-h-[400px] overflow-hidden mb-6">
         <img
-          className="object-cover  object-center"
+          className="w-full h-full object-cover object-center"
           src={`http://localhost:4000/${postInfo.cover}`}
         />
       </div>

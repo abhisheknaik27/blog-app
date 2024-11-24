@@ -15,10 +15,13 @@ import path from 'path';
 const uploadMiddleware = multer({ dest: 'uploads/' });
 
 dotenv.config();
+
+const SECRET_KEY = process.env.JWT_SECRET_KEY;
+
 const app = express();
 
 const salt = bcrypt.genSaltSync(10);
-const SECRET_KEY = "dsknndsncdbiuwebcjkbjkbdcsdckl";
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
