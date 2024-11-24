@@ -4,12 +4,12 @@ const Post = () => {
   return (
     <>
       {/* Posts */}
-      <div className="grid grid-cols-2 gap-3 mb-8 ">
-        <div className="">
+      <div className="grid grid-cols-2 gap-3 mb-8 max-h-[400px] overflow-hidden">
+        <div className="flex items-start justify-center max-h-[400px] overflow-hidden ">
           <img
-            src="https://placehold.co/600x300"
+            src="https://placehold.co/400x300"
             alt=""
-            className="max-w-[100%] m-1"
+            className="pt-2 w-full h-[300px] md:h-[400px] object-cover"
           />
         </div>
 
@@ -23,7 +23,7 @@ const Post = () => {
             </a>
             <time>2024-01-20 03:34</time>
           </p>
-          <p className="my-3 leading-6">
+          <p className="my-3 leading-6 text-justify pr-4">
             brief description(summary) Lorem ipsum dolor sit amet consectetur
             adipisicing elit. Laboriosam eos saepe itaque qui repudiandae ad
             iure magnam suscipit enim, delectus et nostrum! Repellendus soluta
