@@ -97,9 +97,9 @@ app.post('/post', uploadMiddleware.single('file'), async (req, res) => {
         }
 
         const { originalname, path } = req.file;
-        const ext = originalname.split('.').pop();
+        const parts = originalname.split('.');
+        const ext = parts[parts.length - 1];
         const newPath = `${path}.${ext}`;
-
         
         try {
             fs.renameSync(path, newPath);
@@ -131,6 +131,48 @@ app.post('/post', uploadMiddleware.single('file'), async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
+app.put('/post', uploadMiddleware.single('file'), async(req, res) => {
+
+    try{
+        let newPath = null;
+    if(req.file){ 
+        const { originalname, path } = req.file;
+        const parts = originalname.split('.');
+        const ext = parts[parts.length - 1];
+        newPath = `${path}.${ext}`;
+        fs.renameSync(path, newPath);
+    }
+
+    const { token } = req.cookies;
+        
+    if (!token) {
+        return res.status(401).json({ error: 'Unauthorized: No token provided' });
+    }
+
+    jwt.verify(token, SECRET_KEY, {}, async (err, info) => {
+        if (err) return res.status(401).json({ error: 'Invalid token' });
+        const { id, title, summary, content } = req.body;
+        const post = await PostModel.findById(id);
+
+        const isAuthor = JSON.stringify(post.author) === JSON.stringify(info.id);
+        
+        if(!isAuthor) {
+            res.status(400).json('You are not Author');
+        }
+        await post.updateOne({
+            title,
+            summary,
+            content,
+            cover: newPath? newPath : post.cover,
+        });
+        
+        res.json(post);
+    });
+    } catch(err){
+        console.log('server error in updating')
+    }
+})
 
 
 app.get('/posts', async (req, res) => {
