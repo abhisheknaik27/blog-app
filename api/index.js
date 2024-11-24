@@ -58,18 +58,16 @@ app.post('/login', async(req, res) => {
 app.get('/profile', (req, res) => {
     try{
         const {token} = req.cookies;
-    const verified = jwt.verify(token, SECRET_KEY);
-    if (verified) {
-        return res.send(verified);
-    } else {
-        // Access Denied
-        return res.status(401).send("error");
+        if (!token) {
+            return res.status(401).json({ error: "No token provided, user is not logged in" });
+        }
+        jwt.verify(token, SECRET_KEY, {}, (err, info) => {
+            if(err) throw err;
+            res.json(info);
+        });
+    } catch(err){
+        console.log(err);
     }
-    }catch(err){
-        console.log('error');
-    }
-    
-    
 })
 
 app.post('/logout', (req, res) => {

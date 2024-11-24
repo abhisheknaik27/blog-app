@@ -1,6 +1,5 @@
 import React from "react";
-import Post from "./components/Post";
-import Header from "./components/Header";
+import CreatePost from "./Pages/CreatePost.jsx";
 import { Route, Routes } from "react-router-dom";
 import Login from "./Pages/Login.jsx";
 import Register from "./Pages/Register.jsx";
@@ -15,6 +14,7 @@ const App = () => {
           <Route index element={<HomePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/create" element={<CreatePost />} />
         </Route>
       </Routes>
     </UserContextProvider>
