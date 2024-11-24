@@ -6,7 +6,11 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
 import UserModel from './models/User.js';
+import PostModel from './models/Post.js';
+import multer from 'multer';
+import fs from 'fs';
 
+const uploadMiddleware = multer({ dest: 'uploads/' });
 
 dotenv.config();
 const app = express();
@@ -77,5 +81,23 @@ app.post('/logout', (req, res) => {
         console.log('error');
     }
     
+})
+
+app.post('/post', uploadMiddleware.single('file'), async (req, res) => {
+    const {originalname, path} = req.file;
+    const imageParts = originalname.split('.');
+    const ext = imageParts[imageParts.length - 1];
+    const newPath = path+'.'+ext;
+    fs.renameSync(path, newPath);
+    
+    const { title, summary, content } = req.body;
+    const post = await PostModel.create({
+        title, 
+        summary, 
+        content, 
+        cover: newPath
+    });
+    res.json(post);
+
 })
 app.listen(PORT, () => console.log(`Server running on ${PORT}`))
