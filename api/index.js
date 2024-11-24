@@ -134,7 +134,6 @@ app.post('/post', uploadMiddleware.single('file'), async (req, res) => {
 
 
 app.get('/posts', async (req, res) => {
-
     try{
         const posts = await PostModel.find()
         .populate('author', ['username'])
@@ -143,7 +142,12 @@ app.get('/posts', async (req, res) => {
     res.json(posts);
     }catch(err){
         console.log('err');
-    }
-    
+    }  
+})
+
+app.get('/post/:id', async (req, res) => {
+    const { id } = req.params;
+    const post = await PostModel.findById(id).populate('author', ['username']);
+    res.json(post);
 })
 app.listen(PORT, () => console.log(`Server running on ${PORT}`))
